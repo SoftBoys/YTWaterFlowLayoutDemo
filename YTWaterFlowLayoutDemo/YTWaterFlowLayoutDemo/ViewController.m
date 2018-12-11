@@ -7,11 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "YTWaterFlowLayoutViewController.h"
 
-#import "YTWaterFlowLayout.h"
-
-@interface ViewController () <UICollectionViewDataSource, YTWaterFlowLayoutDelagate>
-@property (nonatomic, strong) UICollectionView *collectionView;
+@interface ViewController ()
 
 @end
 
@@ -20,88 +18,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.collectionView.frame = self.view.bounds;
-    self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor orangeColor];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.backgroundColor = [UIColor redColor];
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    [button setTitle:@"纵向瀑布流" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(btnVClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    button.frame = CGRectMake(100, 100, 80, 80);
+    [button sizeToFit];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellID"];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headID"];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footID"];
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button2.backgroundColor = [UIColor redColor];
+    button2.titleLabel.font = [UIFont systemFontOfSize:16];
+    [button2 setTitle:@"横向瀑布流" forState:UIControlStateNormal];
+    [button2 addTarget:self action:@selector(btnHClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button2];
+    button2.frame = CGRectMake(100, 200, 80, 80);
+    [button2 sizeToFit];
     
-    YTWaterFlowLayout *layout = (YTWaterFlowLayout *)self.collectionView.collectionViewLayout;
-    layout.delegate = self;
-    [self.collectionView reloadData];
-    
 }
-
-#pragma mark YTWaterFlowLayoutDelagate
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellID" forIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [cell viewWithTag:100];
-    if (label == nil) {
-        label = [UILabel new];
-        label.frame = CGRectMake(10, 10, 200, 0);
-        label.numberOfLines = 0;
-        [cell.contentView addSubview:label];
-        label.tag = 100;
-    }
-    NSString *text = [NSString  stringWithFormat:@"section:%@\nrow:%@", @(indexPath.section), @(indexPath.row)];
-    label.text = text;
-    [label sizeToFit];
-    return cell;
+- (void)btnVClick {
+    YTWaterFlowLayoutViewController *waterVC = [YTWaterFlowLayoutViewController new];
+    waterVC.scrollDirection = UICollectionViewScrollDirectionVertical;
+    [self.navigationController pushViewController:waterVC animated:YES];
 }
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 20;
+- (void)btnHClick {
+    YTWaterFlowLayoutViewController *waterVC = [YTWaterFlowLayoutViewController new];
+    waterVC.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    [self.navigationController pushViewController:waterVC animated:YES];
 }
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
-}
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        UICollectionReusableView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headID" forIndexPath:indexPath];
-        headView.backgroundColor = [UIColor redColor];
-        return headView;
-    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        UICollectionReusableView *footView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"footID" forIndexPath:indexPath];
-        footView.backgroundColor = [UIColor blueColor];
-        return footView;
-    }
-    return nil;
-}
-#pragma mark YTWaterFlowLayoutDelagate
-- (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    //    CGFloat itemW = 0;
-    //    CGFloat itemH = 200 + (arc4random() % 100);
-    
-    CGFloat itemW = 200 + (arc4random() % 100);
-    CGFloat itemH = 0;
-    
-    return CGSizeMake(itemW, itemH);
-}
-- (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(20, 20);
-}
-- (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(20, 20);
-}
-- (UIEdgeInsets)edgeInsetInFlowLayout:(YTWaterFlowLayout *)flowLayout {
-    return UIEdgeInsetsMake(20, 20, 20, 20);
-}
-- (NSInteger)rowCountInFlowLayout:(YTWaterFlowLayout *)flowLayout {
-    return 2;
-}
-#pragma mark lazy
-- (UICollectionView *)collectionView {
-    if (!_collectionView) {
-        YTWaterFlowLayout *layout = [YTWaterFlowLayout new];
-        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        [self.view addSubview:collectionView];
-        _collectionView = collectionView;
-    }
-    return _collectionView;
-}
-
 
 @end

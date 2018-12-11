@@ -14,6 +14,7 @@
 		CE1861C321BF5DC50009BDF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1861C121BF5DC50009BDF7 /* LaunchScreen.storyboard */; };
 		CE1861C621BF5DC50009BDF7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1861C521BF5DC50009BDF7 /* main.m */; };
 		CE1861CF21BF5DFA0009BDF7 /* YTWaterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1861CE21BF5DFA0009BDF7 /* YTWaterFlowLayout.m */; };
+		CE1861D221BF637D0009BDF7 /* YTWaterFlowLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1861D121BF637D0009BDF7 /* YTWaterFlowLayoutViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		CE1861C521BF5DC50009BDF7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE1861CD21BF5DFA0009BDF7 /* YTWaterFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTWaterFlowLayout.h; sourceTree = "<group>"; };
 		CE1861CE21BF5DFA0009BDF7 /* YTWaterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTWaterFlowLayout.m; sourceTree = "<group>"; };
+		CE1861D021BF637D0009BDF7 /* YTWaterFlowLayoutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YTWaterFlowLayoutViewController.h; sourceTree = "<group>"; };
+		CE1861D121BF637D0009BDF7 /* YTWaterFlowLayoutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YTWaterFlowLayoutViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,8 @@
 				CE1861B721BF5DC30009BDF7 /* AppDelegate.m */,
 				CE1861B921BF5DC30009BDF7 /* ViewController.h */,
 				CE1861BA21BF5DC30009BDF7 /* ViewController.m */,
+				CE1861D021BF637D0009BDF7 /* YTWaterFlowLayoutViewController.h */,
+				CE1861D121BF637D0009BDF7 /* YTWaterFlowLayoutViewController.m */,
 				CE1861BC21BF5DC30009BDF7 /* Main.storyboard */,
 				CE1861BF21BF5DC50009BDF7 /* Assets.xcassets */,
 				CE1861C121BF5DC50009BDF7 /* LaunchScreen.storyboard */,
@@ -110,6 +115,7 @@
 		CE1861AB21BF5DC30009BDF7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = YT;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = guojunwei;
 				TargetAttributes = {
@@ -158,6 +164,7 @@
 				CE1861BB21BF5DC30009BDF7 /* ViewController.m in Sources */,
 				CE1861C621BF5DC50009BDF7 /* main.m in Sources */,
 				CE1861B821BF5DC30009BDF7 /* AppDelegate.m in Sources */,
+				CE1861D221BF637D0009BDF7 /* YTWaterFlowLayoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
