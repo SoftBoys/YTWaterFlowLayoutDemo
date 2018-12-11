@@ -19,6 +19,7 @@ static CGFloat kRowMargin = 10.0f;
 @property (nonatomic, strong) NSMutableArray <NSNumber*> *columnHeightArray;
 @property (nonatomic, strong) NSMutableArray <NSNumber*> *rowWidthArray;
 
+/** 协议相关 */
 @property (nonatomic, assign, readonly) NSInteger columnCount;
 @property (nonatomic, assign, readonly) NSInteger rowCount;
 @property (nonatomic, assign, readonly) CGFloat columnMargin;
@@ -135,7 +136,12 @@ static CGFloat kRowMargin = 10.0f;
     } else if ([elementKind isEqualToString:UICollectionElementKindSectionFooter]) {
         frame = [self footerFrameWithIndexPath:indexPath];
     }
-    if (frame.size.height <= 0.1) {
+    // 纵向滑动时 高度小于0.1 不显示
+    if (self.scrollDirection == UICollectionViewScrollDirectionVertical && frame.size.height <= 0.1) {
+        return nil;
+    }
+    // 横向滑动时 宽度小于0.1 不显示
+    if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal && frame.size.width <= 0.1) {
         return nil;
     }
     
@@ -180,18 +186,22 @@ static CGFloat kRowMargin = 10.0f;
     CGFloat collectionW = self.collectionView.frame.size.width;
     CGFloat collectionH = self.collectionView.frame.size.height;
     
-    CGFloat itemW = [self.delegate flowLayout:self sizeForItemAtIndexPath:indexPath].width;
-    CGFloat itemH = [self.delegate flowLayout:self sizeForItemAtIndexPath:indexPath].height;
+    CGSize itemSize = [self.delegate flowLayout:self sizeForItemAtIndexPath:indexPath];
+    CGFloat itemW = itemSize.width;
+    CGFloat itemH = itemSize.height;
+    
+    // 内边距
+    UIEdgeInsets edgeInset = self.edgeInset;
     
     //
-    CGFloat itemX = self.edgeInset.left;
-    CGFloat itemY = self.edgeInset.top;
+    CGFloat itemX = edgeInset.left;
+    CGFloat itemY = edgeInset.top;
     
     CGRect frame = CGRectZero;
     
     // 竖向滑动
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-        itemW = (collectionW-self.edgeInset.left-self.edgeInset.right-(self.columnCount-1)*self.columnMargin)/self.columnCount;
+        itemW = (collectionW-edgeInset.left-edgeInset.right-(self.columnCount-1)*self.columnMargin)/self.columnCount;
         
         // 获取最低列的位置
         CGFloat minColumnHeight = [self.columnHeightArray.firstObject doubleValue];
@@ -205,7 +215,7 @@ static CGFloat kRowMargin = 10.0f;
         }
         
         // 设置item位置
-        itemX = self.edgeInset.left + minColumn * (itemW + self.columnMargin);
+        itemX = edgeInset.left + minColumn * (itemW + self.columnMargin);
         itemY = minColumnHeight;
         
         frame = CGRectMake(itemX, itemY, itemW, itemH);
@@ -216,7 +226,7 @@ static CGFloat kRowMargin = 10.0f;
     }
     // 横向滑动
     else {
-        itemH = (collectionH-self.edgeInset.top-self.edgeInset.bottom-(self.rowCount-1)*self.rowMargin)/self.rowCount;
+        itemH = (collectionH-edgeInset.top-edgeInset.bottom-(self.rowCount-1)*self.rowMargin)/self.rowCount;
     
         // 获取最低列的位置
         CGFloat minRowWidth = [self.rowWidthArray.firstObject doubleValue];
@@ -231,7 +241,7 @@ static CGFloat kRowMargin = 10.0f;
         
         // 设置item位置
         itemX = minRowWidth;
-        itemY = self.edgeInset.top + minRow * (itemH + self.rowMargin);
+        itemY = edgeInset.top + minRow * (itemH + self.rowMargin);
         
         frame = CGRectMake(itemX, itemY, itemW, itemH);
         
