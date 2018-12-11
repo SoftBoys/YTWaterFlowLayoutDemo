@@ -14,6 +14,7 @@
 - (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
+
 - (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForHeaderInSection:(NSInteger)section;
 - (CGSize)flowLayout:(YTWaterFlowLayout *)flowLayout sizeForFooterInSection:(NSInteger)section;
 
