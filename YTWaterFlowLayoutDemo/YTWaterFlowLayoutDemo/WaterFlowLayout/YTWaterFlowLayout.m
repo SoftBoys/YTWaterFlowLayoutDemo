@@ -94,12 +94,10 @@ static CGFloat kRowMargin = 10.0f;
         NSInteger rowCount = [self.collectionView numberOfItemsInSection:section];
         
         // 添加Header
-        if ([self.delegate respondsToSelector:@selector(flowLayout:sizeForHeaderInSection:)]) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-            UICollectionViewLayoutAttributes *attribute = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath];
-            if (attribute) {
-                [self.layoutAttributeArray addObject:attribute];
-            }
+        NSIndexPath *indexPath_h = [NSIndexPath indexPathForItem:0 inSection:section];
+        UICollectionViewLayoutAttributes *attribute_h = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath_h];
+        if (attribute_h) {
+            [self.layoutAttributeArray addObject:attribute_h];
         }
         
         // 获取每条 Cell
@@ -110,12 +108,10 @@ static CGFloat kRowMargin = 10.0f;
         }
         
         // 添加Footer
-        if ([self.delegate respondsToSelector:@selector(flowLayout:sizeForFooterInSection:)]) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-            UICollectionViewLayoutAttributes *attribute = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter atIndexPath:indexPath];
-            if (attribute) {
-                [self.layoutAttributeArray addObject:attribute];
-            }
+        NSIndexPath *indexPath_f = [NSIndexPath indexPathForItem:0 inSection:section];
+        UICollectionViewLayoutAttributes *attribute_f = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter atIndexPath:indexPath_f];
+        if (attribute_f) {
+            [self.layoutAttributeArray addObject:attribute_f];
         }
         
     }
@@ -178,6 +174,13 @@ static CGFloat kRowMargin = 10.0f;
     
     
     return CGSizeZero;
+}
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    return NO;
+}
+- (BOOL)flipsHorizontallyInOppositeLayoutDirection {
+    return YES;
 }
 
 #pragma mark Helper

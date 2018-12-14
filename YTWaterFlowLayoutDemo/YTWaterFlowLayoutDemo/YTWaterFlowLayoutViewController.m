@@ -15,7 +15,11 @@
 @end
 
 @implementation YTWaterFlowLayoutViewController
-
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    NSLog(@"frame:%@", NSStringFromCGRect([UIScreen mainScreen].bounds));
+    [self.collectionView.collectionViewLayout prepareLayout];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -130,7 +134,7 @@
     return 3;
 }
 - (NSInteger)columnCountInFlowLayout:(YTWaterFlowLayout *)flowLayout {
-    return 2;
+    return 10;
 }
 #pragma mark lazy
 - (UICollectionView *)collectionView {
